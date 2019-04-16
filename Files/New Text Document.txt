@@ -1,0 +1,108 @@
+#include<fstream>
+#include<iostream>
+#include<string.h>
+#include<stdlib.h>
+using namespace std;
+struct day{
+    int date,month,year;
+    };
+struct passenger{
+    int PNR,SER,AGE,BER;
+    day D;
+    char NAME[31],COH[2];
+    };
+void Takedata(passenger &P)
+{
+    cout<<"\n Enter the name of passenger : ";
+    cin.getline(P.NAME,30);
+    cout<<"\n Enter the age of the Passenger : ";
+    cin>>P.AGE;
+    cout<<"\n Enter the date of travel : ";
+    cout<<"\n Enter Date : ";
+    cin>>P.D.date;
+    cout<<"\n Enter Month : ";
+    cin>>P.D.month;
+    cout<<"\n Enter Year : ";
+    cin>>P.D.year;
+
+}
+void Print(passenger P)
+{
+    int s=strlen(P.NAME);
+    ofstream fout;
+    fout.open("Ticket/Ticket.txt",ios::out);
+    fout<<" ";
+    for(int i=0;i<65;i++)
+    fout<<"_";
+    fout<<"\n| \t \t \t--INDIAN RAILWAYS-- \t \t \t ";
+    fout<<" |\n|";
+    for(int i=0;i<65;i++)
+        fout<<"-";
+    fout<<"|\n|PNR - "<<P.PNR<<" ";
+    fout<<" Date - "<<P.D.date<<"/"<<P.D.month<<"/"<<P.D.year;
+    fout<<" Distance - 634 ";
+    fout<<" Serial No - "<<P.SER<<"|\n|";
+    fout<<"Name - "<<P.NAME;
+    for(int i=0;i<58-s;i++)
+        fout<<" ";
+    fout<<"|\n|Age - "<<P.AGE;
+    for(int i=0;i<57;i++)
+        fout<<" ";
+    fout<<"|\n|Train No - 12418";
+    for(int i=0;i<49;i++)
+        fout<<" ";
+    fout<<"|\n|Reserved From- Allahabad\t\t";
+    fout<<"Departure-"<<P.D.date<<"/"<<P.D.month<<"/"<<P.D.year<<" 21:30";
+
+    fout<<"|\n|Reserved To - Delhi\t\t\t";
+    fout<<"Arrival - "<<P.D.date+1<<"/"<<P.D.month<<"/"<<P.D.year<<" 08:05 ";
+    fout<<"|\n|";
+    for(int i=0;i<65;i++)
+        fout<<" ";
+    fout<<"|\n|Class - SLR";
+    for(int i=0;i<54;i++)
+        fout<<" ";
+    fout<<"|\n|Coach - "<<P.COH<<"\t Berth - "<<P.BER;
+    fout<<"\t\t\t \t \t ";
+    fout<<" |\n|";
+    for(int i=0;i<65;i++)
+        fout<<"_";
+    fout<<"|";
+    fout.close();
+}
+int readfile()
+{   int K=0;
+    passenger PR;
+    ifstream fin;
+    fin.open("source/data.txt",ios::app);
+    while(!fin.eof()){
+    fin.read((char*)&PR,sizeof(PR));
+    K++;
+    }
+    fin.close();
+    return K;
+}
+void booking()
+{
+    passenger P;
+
+    Takedata(P);
+    int K=readfile();
+    P.PNR=15000+K;
+    P.SER=10000+K;
+    P.BER=10+K;
+    strcpy(P.COH,"S1");
+    ofstream fout;
+    fout.open("source/data.txt",ios::app);
+    fout.write((char*)&P,sizeof(P));
+    fout.close();
+    Print(P);
+
+}
+int main()
+{
+
+
+    booking();
+
+}
