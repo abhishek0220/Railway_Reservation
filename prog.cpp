@@ -21,10 +21,14 @@ void Takedata(passenger &PT)
     cout<<"\n Enter the date of travel : ";
     cout<<"\n Enter Date : ";
     cin>>PT.D.date;
-    cout<<"\n Enter Month : ";
-    cin>>PT.D.month;
-    cout<<"\n Enter Year : ";
-    cin>>PT.D.year;
+    do{
+        cout<<"\n Enter Month : ";
+        cin>>PT.D.month;
+    }while((PT.D.year < 0)||(PT.D.year > 12));
+    do{
+        cout<<"\n Enter Year : ";
+        cin>>PT.D.year;
+    }while((PT.D.year < 0));
 
 }
 void Print(passenger P)
